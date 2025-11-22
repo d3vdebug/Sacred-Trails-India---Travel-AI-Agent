@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useMemo } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import { RoomContext } from '@livekit/components-react';
 import { APP_CONFIG_DEFAULTS, type AppConfig } from '@/app-config';
 import { useRoom } from '@/hooks/useRoom';
@@ -10,11 +10,15 @@ const SessionContext = createContext<{
   isSessionActive: boolean;
   startSession: () => void;
   endSession: () => void;
+  selectedVoice: string;
+  setSelectedVoice: (voice: string) => void;
 }>({
   appConfig: APP_CONFIG_DEFAULTS,
   isSessionActive: false,
   startSession: () => {},
   endSession: () => {},
+  selectedVoice: 'hi-IN-Aman',
+  setSelectedVoice: () => {},
 });
 
 interface SessionProviderProps {
@@ -23,10 +27,11 @@ interface SessionProviderProps {
 }
 
 export const SessionProvider = ({ appConfig, children }: SessionProviderProps) => {
-  const { room, isSessionActive, startSession, endSession } = useRoom(appConfig);
+  const [selectedVoice, setSelectedVoice] = useState('hi-IN-Aman');
+  const { room, isSessionActive, startSession, endSession } = useRoom(appConfig, selectedVoice);
   const contextValue = useMemo(
-    () => ({ appConfig, isSessionActive, startSession, endSession }),
-    [appConfig, isSessionActive, startSession, endSession]
+    () => ({ appConfig, isSessionActive, startSession, endSession, selectedVoice, setSelectedVoice }),
+    [appConfig, isSessionActive, startSession, endSession, selectedVoice, setSelectedVoice]
   );
 
   return (

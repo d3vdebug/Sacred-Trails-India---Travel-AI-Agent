@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { AccessToken, type AccessTokenOptions, type VideoGrant } from 'livekit-server-sdk';
+import { AccessToken, RoomServiceClient, type AccessTokenOptions, type VideoGrant } from 'livekit-server-sdk';
 import { RoomConfiguration } from '@livekit/protocol';
 
 type ConnectionDetails = {
@@ -32,11 +32,16 @@ export async function POST(req: Request) {
     // Parse agent configuration from request body
     const body = await req.json();
     const agentName: string = body?.room_config?.agents?.[0]?.agent_name;
+    const voice: string = body?.voice || 'hi-IN-Aman';
 
     // Generate participant token
     const participantName = 'user';
     const participantIdentity = `voice_assistant_user_${Math.floor(Math.random() * 10_000)}`;
     const roomName = `voice_assistant_room_${Math.floor(Math.random() * 10_000)}`;
+
+    // Create room with metadata
+    const roomService = new RoomServiceClient(LIVEKIT_URL!, API_KEY!, API_SECRET!);
+    await roomService.createRoom({ name: roomName, metadata: JSON.stringify({ voice }) });
 
     const participantToken = await createParticipantToken(
       { identity: participantIdentity, name: participantName },

@@ -1,4 +1,6 @@
 import { Button } from '@/components/livekit/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/livekit/select';
+import { useSession } from '@/components/app/session-provider';
 
 function WelcomeImage() {
   return (
@@ -28,17 +30,19 @@ export const WelcomeView = ({
   onStartCall,
   ref,
 }: React.ComponentProps<'div'> & WelcomeViewProps) => {
+  const { selectedVoice, setSelectedVoice } = useSession();
+
   return (
     <div ref={ref}>
       <section className="bg-background flex flex-col items-center justify-center text-center">
         <WelcomeImage />
 
         <p className="text-foreground max-w-prose pt-1 leading-6 font-medium">
-          Chat live with your voice AI agent
+          Live Chat with Falcon AI
         </p>
 
         <Button variant="primary" size="lg" onClick={onStartCall} className="mt-6 w-64 font-mono">
-          {startButtonText}
+          Start Chat
         </Button>
       </section>
 

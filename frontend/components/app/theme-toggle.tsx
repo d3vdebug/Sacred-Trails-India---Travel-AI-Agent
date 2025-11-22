@@ -6,7 +6,7 @@ import { THEME_MEDIA_QUERY, THEME_STORAGE_KEY, cn } from '@/lib/utils';
 
 const THEME_SCRIPT = `
   const doc = document.documentElement;
-  const theme = localStorage.getItem("${THEME_STORAGE_KEY}") ?? "system";
+  const theme = localStorage.getItem("${THEME_STORAGE_KEY}") ?? "light";
 
   if (theme === "system") {
     if (window.matchMedia("${THEME_MEDIA_QUERY}").matches) {
@@ -53,7 +53,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
   const [theme, setTheme] = useState<ThemeMode | undefined>(undefined);
 
   useEffect(() => {
-    const storedTheme = (localStorage.getItem(THEME_STORAGE_KEY) as ThemeMode) ?? 'system';
+    const storedTheme = (localStorage.getItem(THEME_STORAGE_KEY) as ThemeMode) ?? 'light';
 
     setTheme(storedTheme);
   }, []);
