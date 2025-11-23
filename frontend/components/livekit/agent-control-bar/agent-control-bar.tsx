@@ -27,6 +27,7 @@ export interface AgentControlBarProps extends UseInputControlsProps {
   onDisconnect?: () => void;
   onChatOpenChange?: (open: boolean) => void;
   onDeviceError?: (error: { source: Track.Source; error: Error }) => void;
+  chatOpen?: boolean;
 }
 
 /**
@@ -39,11 +40,11 @@ export function AgentControlBar({
   onDisconnect,
   onDeviceError,
   onChatOpenChange,
+  chatOpen = false,
   ...props
 }: AgentControlBarProps & HTMLAttributes<HTMLDivElement>) {
   const { send } = useChat();
   const participants = useRemoteParticipants();
-  const [chatOpen, setChatOpen] = useState(false);
   const publishPermissions = usePublishPermissions();
   const { isSessionActive, endSession } = useSession();
 
@@ -64,10 +65,9 @@ export function AgentControlBar({
 
   const handleToggleTranscript = useCallback(
     (open: boolean) => {
-      setChatOpen(open);
       onChatOpenChange?.(open);
     },
-    [onChatOpenChange, setChatOpen]
+    [onChatOpenChange]
   );
 
   const handleDisconnect = useCallback(async () => {
@@ -89,7 +89,8 @@ export function AgentControlBar({
     <div
       aria-label="Voice assistant controls"
       className={cn(
-        'bg-background border-input/50 dark:border-muted flex flex-col rounded-[31px] border p-3 drop-shadow-md/3',
+        'bg-background/95 backdrop-blur-md border border-border/50 shadow-xl hover:shadow-2xl transition-all duration-300 flex flex-col rounded-2xl p-4',
+        'dark:bg-background/95 dark:border-border/30',
         className
       )}
       {...props}

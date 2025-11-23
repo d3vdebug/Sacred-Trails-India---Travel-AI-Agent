@@ -33,29 +33,60 @@ export const ChatEntry = ({
     <li
       title={title}
       data-lk-message-origin={messageOrigin}
-      className={cn('group flex w-full flex-col gap-0.5', className)}
+      className={cn('group flex w-full flex-col gap-2 animate-in slide-in-from-bottom-2', className)}
       {...props}
     >
       <header
         className={cn(
-          'text-muted-foreground flex items-center gap-2 text-sm',
-          messageOrigin === 'local' ? 'flex-row-reverse' : 'text-left'
+          'flex items-center gap-2 text-xs',
+          messageOrigin === 'local' ? 'flex-row-reverse justify-end' : 'justify-start'
         )}
       >
-        {name && <strong>{name}</strong>}
-        <span className="font-mono text-xs opacity-0 transition-opacity ease-linear group-hover:opacity-100">
-          {hasBeenEdited && '*'}
-          {time.toLocaleTimeString(locale, { timeStyle: 'short' })}
-        </span>
+        {name && (
+          <div className={cn(
+            'flex items-center gap-2',
+            messageOrigin === 'local' ? 'flex-row-reverse' : 'flex-row'
+          )}>
+            <div className={cn(
+              'w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold',
+              messageOrigin === 'local' 
+                ? 'bg-primary text-primary-foreground' 
+                : 'bg-muted text-muted-foreground'
+            )}>
+              {name.charAt(0).toUpperCase()}
+            </div>
+            <strong className="text-sm text-foreground">{name}</strong>
+          </div>
+        )}
+        <div className={cn(
+          'flex items-center gap-1 text-muted-foreground/70',
+          messageOrigin === 'local' ? 'flex-row-reverse' : 'flex-row'
+        )}>
+          <span className="font-mono text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+            {hasBeenEdited && 'edited '}
+            {time.toLocaleTimeString(locale, { timeStyle: 'short' })}
+          </span>
+        </div>
       </header>
-      <span
-        className={cn(
-          'max-w-4/5 rounded-[20px]',
-          messageOrigin === 'local' ? 'bg-muted ml-auto p-2' : 'mr-auto'
-        )}
-      >
-        {message}
-      </span>
+      
+      <div className={cn(
+        'flex w-full',
+        messageOrigin === 'local' ? 'justify-end' : 'justify-start'
+      )}>
+        <div
+          className={cn(
+            'max-w-[85%] md:max-w-[75%] rounded-2xl px-4 py-3 shadow-sm transition-all duration-200',
+            'hover:shadow-md',
+            messageOrigin === 'local' 
+              ? 'bg-gradient-to-br from-primary to-primary/90 text-primary-foreground ml-auto' 
+              : 'bg-card border border-border/50 text-card-foreground mr-auto'
+          )}
+        >
+          <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
+            {message}
+          </p>
+        </div>
+      </div>
     </li>
   );
 };

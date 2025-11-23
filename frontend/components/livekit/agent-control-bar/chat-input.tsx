@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { PaperPlaneRightIcon, SpinnerIcon } from '@phosphor-icons/react/dist/ssr';
 import { Button } from '@/components/livekit/button';
+import { cn } from '@/lib/utils';
 
 const MOTION_PROPS = {
   variants: {
@@ -19,7 +20,7 @@ const MOTION_PROPS = {
   initial: 'hidden',
   transition: {
     duration: 0.3,
-    ease: 'easeOut',
+    ease: [0.4, 0, 0.2, 1] as const,
   },
 };
 
@@ -65,29 +66,37 @@ export function ChatInput({
       inert={!chatOpen}
       {...MOTION_PROPS}
       animate={chatOpen ? 'visible' : 'hidden'}
-      className="border-input/50 flex w-full items-start overflow-hidden border-b"
+      className="flex w-full items-start overflow-hidden"
     >
       <form
         onSubmit={handleSubmit}
-        className="mb-3 flex grow items-end gap-2 rounded-md pl-1 text-sm"
+        className="flex grow items-end gap-3 p-2 bg-muted/30 rounded-xl border border-border/50"
       >
-        <input
-          autoFocus
-          ref={inputRef}
-          type="text"
-          value={message}
-          disabled={!chatOpen}
-          placeholder="Type something..."
-          onChange={(e) => setMessage(e.target.value)}
-          className="h-8 flex-1 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-        />
+        <div className="flex-1 relative">
+          <input
+            autoFocus
+            ref={inputRef}
+            type="text"
+            value={message}
+            disabled={!chatOpen}
+            placeholder="Type your message..."
+            onChange={(e) => setMessage(e.target.value)}
+            className="w-full h-10 px-4 pr-12 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 text-sm placeholder:text-muted-foreground/60"
+          />
+          <div className="absolute right-3 top-1/2 -translate-y-1/2">
+            <div className="w-2 h-2 bg-primary/40 rounded-full animate-pulse"></div>
+          </div>
+        </div>
         <Button
-          size="icon"
+          size="lg"
           type="submit"
           disabled={isDisabled}
           variant={isDisabled ? 'secondary' : 'primary'}
-          title={isSending ? 'Sending...' : 'Send'}
-          className="self-start"
+          title={isSending ? 'Sending...' : 'Send message'}
+          className={cn(
+            "h-10 px-6 transition-all duration-200 hover:scale-105",
+            !isDisabled && "shadow-lg hover:shadow-xl"
+          )}
         >
           {isSending ? (
             <SpinnerIcon className="animate-spin" weight="bold" />

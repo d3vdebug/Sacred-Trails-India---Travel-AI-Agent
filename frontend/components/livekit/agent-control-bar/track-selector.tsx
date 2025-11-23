@@ -35,35 +35,46 @@ export function TrackSelector({
   onActiveDeviceChange,
 }: TrackSelectorProps) {
   return (
-    <div className={cn('flex items-center gap-0', className)}>
+    <div className={cn('flex items-center bg-muted/30 rounded-xl overflow-hidden border border-border/50 hover:border-border transition-all duration-200', className)}>
       <TrackToggle
         size="icon"
-        variant="primary"
+        variant="default"
         source={source}
         pressed={pressed}
         pending={pending}
         disabled={disabled}
         onPressedChange={onPressedChange}
-        className="peer/track group/track has-[.audiovisualizer]:w-auto has-[.audiovisualizer]:px-3 has-[~_button]:rounded-r-none has-[~_button]:pr-2 has-[~_button]:pl-3"
+        className={cn(
+          "relative h-10 w-10 rounded-none first:rounded-l-xl last:rounded-r-xl",
+          "hover:bg-primary/10 transition-colors duration-200",
+          "peer/track group/track has-[.audiovisualizer]:w-auto has-[.audiovisualizer]:px-3",
+          pressed && "bg-primary/10 hover:bg-primary/20"
+        )}
       >
         {audioTrackRef && (
           <BarVisualizer
             barCount={3}
-            options={{ minHeight: 5 }}
+            options={{ minHeight: 6, maxHeight: 16 }}
             trackRef={audioTrackRef}
             className="audiovisualizer flex h-6 w-auto items-center justify-center gap-0.5"
           >
             <span
               className={cn([
-                'h-full w-0.5 origin-center rounded-2xl',
-                'group-data-[state=on]/track:bg-foreground group-data-[state=off]/track:bg-destructive',
+                'h-full w-0.5 origin-center rounded-full',
+                'transition-colors duration-200',
+                'group-data-[state=on]/track:bg-primary group-data-[state=off]/track:bg-muted-foreground/50',
                 'data-lk-muted:bg-muted',
               ])}
             />
           </BarVisualizer>
         )}
       </TrackToggle>
-      <hr className="bg-border peer-data-[state=off]/track:bg-destructive/20 relative z-10 -mr-px hidden h-4 w-px border-none has-[~_button]:block" />
+      
+      <div className={cn(
+        "w-px h-6 bg-border/50 mx-1",
+        "peer-data-[state=off]/track:bg-destructive/30"
+      )} />
+      
       <TrackDeviceSelect
         size="sm"
         kind={kind}
@@ -71,11 +82,12 @@ export function TrackSelector({
         onMediaDeviceError={onMediaDeviceError}
         onActiveDeviceChange={onActiveDeviceChange}
         className={cn([
-          'rounded-l-none pl-2',
-          'peer-data-[state=off]/track:text-destructive',
-          'hover:text-foreground focus:text-foreground',
-          'hover:peer-data-[state=off]/track:text-foreground',
-          'focus:peer-data-[state=off]/track:text-destructive',
+          'rounded-none pl-3 pr-4 border-0 bg-transparent h-10',
+          'text-muted-foreground hover:text-foreground focus:text-foreground',
+          'hover:bg-accent/50 focus:bg-accent/50',
+          'transition-all duration-200',
+          'peer-data-[state=off]/track:text-muted-foreground',
+          'peer-data-[state=off]/track:hover:text-foreground',
         ])}
       />
     </div>

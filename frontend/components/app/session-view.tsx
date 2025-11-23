@@ -10,6 +10,7 @@ import {
   AgentControlBar,
   type ControlBarControls,
 } from '@/components/livekit/agent-control-bar/agent-control-bar';
+import { LoadingIndicator, PulseIndicator } from '@/components/app/loading-indicator';
 import { useChatMessages } from '@/hooks/useChatMessages';
 import { useConnectionTimeout } from '@/hooks/useConnectionTimout';
 import { useDebugMode } from '@/hooks/useDebug';
@@ -36,7 +37,7 @@ const BOTTOM_VIEW_MOTION_PROPS = {
   transition: {
     duration: 0.3,
     delay: 0.5,
-    ease: 'easeOut',
+    ease: [0.4, 0, 0.2, 1] as const,
   },
 };
 
@@ -86,12 +87,28 @@ export const SessionView = ({
     const lastMessageIsLocal = lastMessage?.from?.isLocal === true;
 
     if (scrollAreaRef.current && lastMessageIsLocal) {
+      // Force immediate scroll to bottom when new message is sent
       scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
+      
+      // Also set a timeout to ensure scroll happens after any animations
+      setTimeout(() => {
+        if (scrollAreaRef.current) {
+          scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
+        }
+      }, 50);
     }
   }, [messages]);
 
+  const hasMessages = messages.length > 0;
+
   return (
     <section className="bg-background relative z-10 h-full w-full overflow-hidden" {...props}>
+      {/* Connection Status */}
+      <div className="fixed top-4 right-4 z-50 flex items-center gap-2 bg-background/80 backdrop-blur-sm rounded-full px-3 py-1 border border-border/50">
+        <PulseIndicator active={hasMessages} color="success" />
+        <span className="text-xs font-medium text-muted-foreground">Connected</span>
+      </div>
+
       {/* Chat Transcript */}
       <div
         className={cn(
@@ -101,11 +118,25 @@ export const SessionView = ({
       >
         <Fade top className="absolute inset-x-4 top-0 h-40" />
         <ScrollArea ref={scrollAreaRef} className="px-4 pt-40 pb-[150px] md:px-6 md:pb-[180px]">
-          <ChatTranscript
-            hidden={!chatOpen}
-            messages={messages}
-            className="mx-auto max-w-2xl space-y-3 transition-opacity duration-300 ease-out"
-          />
+          {!hasMessages && chatOpen ? (
+            <div className="flex items-center justify-center min-h-[200px]">
+              <LoadingIndicator 
+                message="Connecting to agent..." 
+                size="sm"
+                className="text-center"
+              />
+            </div>
+          ) : (
+            <ChatTranscript
+              hidden={false}
+              messages={messages}
+              className={cn(
+                "mx-auto max-w-2xl space-y-3 transition-all duration-300 ease-out",
+                !chatOpen && "opacity-60 scale-[0.98]",
+                chatOpen && "opacity-100 scale-100"
+              )}
+            />
+          )}
         </ScrollArea>
       </div>
 
@@ -120,9 +151,9 @@ export const SessionView = ({
         {appConfig.isPreConnectBufferEnabled && (
           <PreConnectMessage messages={messages} className="pb-4" />
         )}
-        <div className="bg-background relative mx-auto max-w-2xl pb-3 md:pb-12">
+        <div className="bg-background/95 backdrop-blur-md relative mx-auto max-w-2xl pb-3 md:pb-12 rounded-2xl border border-border/50 shadow-xl">
           <Fade bottom className="absolute inset-x-0 top-0 h-4 -translate-y-full" />
-          <AgentControlBar controls={controls} onChatOpenChange={setChatOpen} />
+          <AgentControlBar controls={controls} onChatOpenChange={setChatOpen} chatOpen={chatOpen} />
         </div>
       </MotionBottom>
     </section>

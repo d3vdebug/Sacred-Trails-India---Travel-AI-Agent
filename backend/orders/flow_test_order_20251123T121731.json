@@ -1,0 +1,11 @@
+{
+  "drink": "latte",
+  "size": "medium",
+  "milk": "oat",
+  "extras": [
+    "whipped cream"
+  ],
+  "name": "Test Customer",
+  "timestamp": "2025-11-23T12:17:31.293824+00:00",
+  "order_id": "20251123T121731"
+}

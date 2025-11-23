@@ -31,8 +31,15 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
   );
 
   return (
-    <div ref={mergedRef} className={cn('overflow-y-scroll scroll-smooth', className)}>
-      <div>{children}</div>
+    <div 
+      ref={mergedRef} 
+      className={cn(
+        'overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent hover:scrollbar-thumb-border/70',
+        'scroll-smooth',
+        className
+      )}
+    >
+      <div className="min-h-full">{children}</div>
     </div>
   );
 });

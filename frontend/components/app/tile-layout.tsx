@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils';
 const MotionContainer = motion.create('div');
 
 const ANIMATION_TRANSITION = {
-  type: 'spring',
+  type: 'spring' as const,
   stiffness: 675,
   damping: 75,
   mass: 1,
@@ -123,8 +123,9 @@ export function TileLayout({ chatOpen }: TileLayoutProps) {
                     delay: animationDelay,
                   }}
                   className={cn(
-                    'bg-background aspect-square h-[90px] rounded-md border border-transparent transition-[border,drop-shadow]',
-                    chatOpen && 'border-input/50 drop-shadow-lg/10 delay-200'
+                    'bg-background/95 backdrop-blur-sm aspect-square h-[90px] rounded-xl border border-transparent transition-all duration-300',
+                    'hover:border-primary/20 hover:shadow-lg hover:shadow-primary/10',
+                    chatOpen && 'border-primary/30 shadow-lg shadow-primary/20 delay-200'
                   )}
                 >
                   <BarVisualizer
