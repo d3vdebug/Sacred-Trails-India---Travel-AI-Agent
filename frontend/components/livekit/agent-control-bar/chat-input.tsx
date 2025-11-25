@@ -70,7 +70,7 @@ export function ChatInput({
     >
       <form
         onSubmit={handleSubmit}
-        className="flex grow items-end gap-3 p-2 bg-muted/30 rounded-xl border border-border/50"
+        className="flex grow items-end gap-3 p-2 bg-chat-input-bg/30 rounded-xl border border-chat-input-border/50"
       >
         <div className="flex-1 relative">
           <input
@@ -81,10 +81,10 @@ export function ChatInput({
             disabled={!chatOpen}
             placeholder="Type your message..."
             onChange={(e) => setMessage(e.target.value)}
-            className="w-full h-10 px-4 pr-12 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 text-sm placeholder:text-muted-foreground/60"
+            className="w-full h-10 px-4 pr-12 bg-background border border-chat-input-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 text-sm text-chat-input-text placeholder:text-chat-input-placeholder"
           />
           <div className="absolute right-3 top-1/2 -translate-y-1/2">
-            <div className="w-2 h-2 bg-primary/40 rounded-full animate-pulse"></div>
+            <div className="w-2 h-2 bg-connection-success/40 rounded-full animate-pulse"></div>
           </div>
         </div>
         <Button

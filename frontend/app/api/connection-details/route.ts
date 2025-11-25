@@ -32,16 +32,33 @@ export async function POST(req: Request) {
     // Parse agent configuration from request body
     const body = await req.json();
     const agentName: string = body?.room_config?.agents?.[0]?.agent_name;
-    const voice: string = body?.voice || 'hi-IN-Aman';
+    const voice: string = body?.voice || 'en-US-matthew';
+    const mode: string = body?.mode || 'learn';
+
+    console.log('API Route - Received request body:', body);
+    console.log('API Route - Extracted mode:', mode);
 
     // Generate participant token
     const participantName = 'user';
     const participantIdentity = `voice_assistant_user_${Math.floor(Math.random() * 10_000)}`;
-    const roomName = `voice_assistant_room_${Math.floor(Math.random() * 10_000)}`;
+    const roomName = `voice_assistant_${mode}_room_${Math.floor(Math.random() * 10_000)}`;
+    console.log('API Route - Generated room name:', roomName);
 
     // Create room with metadata
     const roomService = new RoomServiceClient(LIVEKIT_URL!, API_KEY!, API_SECRET!);
-    await roomService.createRoom({ name: roomName, metadata: JSON.stringify({ voice }) });
+    const metadata = JSON.stringify({ voice, mode });
+    console.log('API Route - Creating room with metadata:', metadata);
+    
+    try {
+      await roomService.createRoom({ 
+        name: roomName, 
+        metadata: metadata 
+      });
+      console.log('API Route - Room created successfully:', roomName);
+    } catch (roomError) {
+      console.error('API Route - Room creation failed:', roomError);
+      throw roomError;
+    }
 
     const participantToken = await createParticipantToken(
       { identity: participantIdentity, name: participantName },

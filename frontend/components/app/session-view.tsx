@@ -117,7 +117,7 @@ export const SessionView = ({
         )}
       >
         <Fade top className="absolute inset-x-4 top-0 h-40" />
-        <ScrollArea ref={scrollAreaRef} className="px-4 pt-40 pb-[150px] md:px-6 md:pb-[180px]">
+        <ScrollArea ref={scrollAreaRef} className="px-4 pt-32 pb-[150px] md:px-6 md:pb-[180px]">
           {!hasMessages && chatOpen ? (
             <div className="flex items-center justify-center min-h-[200px]">
               <LoadingIndicator 

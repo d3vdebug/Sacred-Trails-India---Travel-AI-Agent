@@ -137,9 +137,10 @@ export function TileLayout({ chatOpen }: TileLayoutProps) {
                   >
                     <span
                       className={cn([
-                        'bg-muted min-h-2.5 w-2.5 rounded-full',
+                        'min-h-2.5 w-2.5 rounded-full',
+                        'bg-[var(--barvisualizer-inactive)]',
                         'origin-center transition-colors duration-250 ease-linear',
-                        'data-[lk-highlighted=true]:bg-foreground data-[lk-muted=true]:bg-muted',
+                        'data-[lk-highlighted=true]:bg-[var(--barvisualizer-active)] data-[lk-muted=true]:bg-[var(--barvisualizer-muted)]',
                       ])}
                     />
                   </BarVisualizer>

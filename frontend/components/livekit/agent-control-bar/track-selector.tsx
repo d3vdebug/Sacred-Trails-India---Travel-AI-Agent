@@ -62,8 +62,8 @@ export function TrackSelector({
               className={cn([
                 'h-full w-0.5 origin-center rounded-full',
                 'transition-colors duration-200',
-                'group-data-[state=on]/track:bg-primary group-data-[state=off]/track:bg-muted-foreground/50',
-                'data-lk-muted:bg-muted',
+                'group-data-[state=on]/track:bg-[var(--barvisualizer-active)] group-data-[state=off]/track:bg-[var(--barvisualizer-inactive)]',
+                'data-lk-muted:bg-[var(--barvisualizer-muted)]',
               ])}
             />
           </BarVisualizer>

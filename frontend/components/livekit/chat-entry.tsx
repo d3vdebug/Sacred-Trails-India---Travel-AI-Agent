@@ -51,11 +51,13 @@ export const ChatEntry = ({
               'w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold',
               messageOrigin === 'local' 
                 ? 'bg-primary text-primary-foreground' 
-                : 'bg-muted text-muted-foreground'
+                : 'bg-emerald-500/20 text-emerald-600'
             )}>
-              {name.charAt(0).toUpperCase()}
+              {messageOrigin === 'remote' ? '🌱' : name?.charAt(0).toUpperCase()}
             </div>
-            <strong className="text-sm text-foreground">{name}</strong>
+            <strong className="text-sm text-foreground">
+              {messageOrigin === 'remote' ? 'Wellness Companion' : name}
+            </strong>
           </div>
         )}
         <div className={cn(
@@ -76,10 +78,10 @@ export const ChatEntry = ({
         <div
           className={cn(
             'max-w-[85%] md:max-w-[75%] rounded-2xl px-4 py-3 shadow-sm transition-all duration-200',
-            'hover:shadow-md',
+            'hover:shadow-md hover:scale-[1.02]',
             messageOrigin === 'local' 
-              ? 'bg-gradient-to-br from-primary to-primary/90 text-primary-foreground ml-auto' 
-              : 'bg-card border border-border/50 text-card-foreground mr-auto'
+              ? 'bg-gradient-to-br from-pink-300 to-purple-300 text-gray-800 ml-auto shadow-lg' 
+              : 'bg-chat-bubble-assistant border border-chat-bubble-assistant-border text-chat-bubble-assistant-text mr-auto'
           )}
         >
           <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">

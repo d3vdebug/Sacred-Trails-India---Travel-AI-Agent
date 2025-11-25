@@ -8,7 +8,7 @@ import { useRoom } from '@/hooks/useRoom';
 const SessionContext = createContext<{
   appConfig: AppConfig;
   isSessionActive: boolean;
-  startSession: () => void;
+  startSession: (mode?: 'learn' | 'quiz' | 'teach_back') => void;
   endSession: () => void;
 }>({
   appConfig: APP_CONFIG_DEFAULTS,
@@ -23,7 +23,7 @@ interface SessionProviderProps {
 }
 
 export const SessionProvider = ({ appConfig, children }: SessionProviderProps) => {
-  const { room, isSessionActive, startSession, endSession } = useRoom(appConfig);
+  const { room, isSessionActive, startSession, endSession } = useRoom(appConfig, 'learn');
   const contextValue = useMemo(
     () => ({ appConfig, isSessionActive, startSession, endSession }),
     [appConfig, isSessionActive, startSession, endSession]

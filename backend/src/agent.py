@@ -1,162 +1,271 @@
-import os
-import json
-import asyncio
 import logging
-import random
-import string
-from datetime import datetime, UTC
+import json
+import os
+import asyncio
+from typing import Annotated, Literal, Optional
+from dataclasses import dataclass
+
+
 
 from dotenv import load_dotenv
+from pydantic import Field
 from livekit.agents import (
     Agent,
     AgentSession,
     JobContext,
     JobProcess,
-    MetricsCollectedEvent,
     RoomInputOptions,
     WorkerOptions,
     cli,
-    metrics,
-    tokenize,
+    function_tool,
+    RunContext,
 )
 
-from livekit.plugins import murf, deepgram, google, silero, noise_cancellation
+from livekit.plugins import murf, silero, google, deepgram, noise_cancellation
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
 
 logger = logging.getLogger("agent")
-
 load_dotenv(".env.local")
 
 
-# ---------------------------------------------------------
-#   BUSINESS LOGIC — Pricing & Order Management
-# ---------------------------------------------------------
 
-# Coffee pricing structure
-PRICING = {
-    "latte": {"small": 3.50, "medium": 4.00, "large": 4.50},
-    "cappuccino": {"small": 3.25, "medium": 3.75, "large": 4.25},
-    "espresso": {"small": 2.50, "medium": 2.75, "large": 3.00},
-    "americano": {"small": 3.00, "medium": 3.25, "large": 3.50},
-    "mocha": {"small": 4.00, "medium": 4.50, "large": 5.00},
+CONTENT_FILE = "programming.json" 
+
+
+DEFAULT_CONTENT = [
+{
+    "id": "constants",
+    "title": "Constants",
+    "summary": "Constants store values that cannot be changed once assigned. They help prevent accidental modification of important data.",
+    "sample_question": "What is a constant and how is it different from a variable?"
+},
+{
+    "id": "operators",
+    "title": "Operators",
+    "summary": "Operators are symbols that perform operations on values, such as arithmetic (+, -), comparison (==, >), or logical (&&, ||).",
+    "sample_question": "What are operators and why are they used in programming?"
+},
+{
+    "id": "comments",
+    "title": "Comments",
+    "summary": "Comments are notes in code that explain what it does. They are ignored by the computer but help developers understand the logic.",
+    "sample_question": "Why are comments important in programming?"
+},
+{
+    "id": "boolean_logic",
+    "title": "Boolean Logic",
+    "summary": "Boolean logic deals with true or false values. It is essential for decision-making in programs using AND, OR, and NOT.",
+    "sample_question": "What is boolean logic and where is it used in programming?"
+},
+{
+    "id": "input_output",
+    "title": "Input & Output",
+    "summary": "Input is information the program receives from the user or system. Output is what the program returns or displays.",
+    "sample_question": "What is the difference between program input and program output?"
+},
+{
+    "id": "string_basics",
+    "title": "Strings",
+    "summary": "Strings are sequences of characters used to store text. They support operations like concatenation and formatting.",
+    "sample_question": "What is a string and how is it commonly used?"
+},
+{
+    "id": "type_casting",
+    "title": "Type Casting",
+    "summary": "Type casting converts data from one type to another, such as from a string to a number. It helps ensure proper calculations and operations.",
+    "sample_question": "What is type casting and when would you use it?"
+},
+{
+    "id": "assignment",
+    "title": "Assignment",
+    "summary": "Assignment means storing a value inside a variable using the assignment operator (=). It updates or sets the variable's content.",
+    "sample_question": "What does assignment mean in programming?"
+},
+{
+    "id": "basic_syntax",
+    "title": "Basic Syntax",
+    "summary": "Syntax refers to the rules of writing valid code in a programming language, such as indentation, semicolons, and brackets.",
+    "sample_question": "What is syntax in programming and why is it important?"
+},
+{
+    "id": "debugging",
+    "title": "Debugging",
+    "summary": "Debugging is the process of finding and fixing errors in code. It often involves testing, printing values, and using debugging tools.",
+    "sample_question": "What is debugging and why is it necessary?"
 }
 
-# Extras pricing
-EXTRA_PRICES = {
-    "whipped cream": 0.50,
-    "caramel syrup": 0.75,
-    "vanilla syrup": 0.75,
-    "hazelnut syrup": 0.75,
-    "chocolate syrup": 0.50,
-}
+]
 
-def generate_order_number():
-    """Generate a unique order number"""
-    return f"CC{random.randint(1000, 9999)}"
+def load_content():
+    """
+    Checks if programming JSON exists. 
+    If NO: Generates it from DEFAULT_CONTENT.
+    If YES: Loads it.
+    """
+    try:
+        path = os.path.join(os.path.dirname(__file__), CONTENT_FILE)
+        
+        # Check if file exists
+        if not os.path.exists(path):
+            logger.info(f"{CONTENT_FILE} not found. Generating study data...")
+            with open(path, "w", encoding='utf-8') as f:
+                json.dump(DEFAULT_CONTENT, f, indent=4)
+            logger.info("Biology content file created successfully.")
+            
+        # Read the file
+        with open(path, "r", encoding='utf-8') as f:
+            data = json.load(f)
+            return data
+            
+    except Exception as e:
+        logger.error(f"Error managing content file: {e}")
+        return []
 
-def calculate_preparation_time(drink, size, extras):
-    """Calculate estimated preparation time"""
-    base_time = {
-        "espresso": 2,
-        "americano": 3,
-        "cappuccino": 4,
-        "latte": 5,
-        "mocha": 6
-    }
-    
-    # Base preparation time
-    time_minutes = base_time.get(drink, 4)
-    
-    # Add time for size (larger drinks take longer)
-    if size == "large":
-        time_minutes += 1
-    elif size == "small":
-        time_minutes -= 1
-    
-    # Add time for extras
-    time_minutes += len(extras) * 0.5
-    
-    # Round to nearest minute
-    return max(2, round(time_minutes))
+# Load data immediately on startup
+COURSE_CONTENT = load_content()
 
-def calculate_total_price(drink, size, extras):
-    """Calculate total price including extras"""
-    # Base drink price
-    base_price = PRICING.get(drink, {}).get(size, 0)
-    
-    # Extras price
-    extras_price = 0
-    for extra in extras:
-        extras_price += EXTRA_PRICES.get(extra, 0.50)  # Default $0.50 per extra
-    
-    total = base_price + extras_price
-    return round(total, 2)
 
-# ---------------------------------------------------------
-#   CODECAFE BARISTA LLM — Friendly + Structured
-# ---------------------------------------------------------
-class BaristaAgent(Agent):
+@dataclass
+class TutorState:
+    """Tracks the current learning context"""
+    current_topic_id: str | None = None
+    current_topic_data: dict | None = None
+    mode: Literal["learn", "quiz", "teach_back"] = "learn"
+    
+    def set_topic(self, topic_id: str):
+        topic = next((item for item in COURSE_CONTENT if item["id"] == topic_id), None)
+        if topic:
+            self.current_topic_id = topic_id
+            self.current_topic_data = topic
+            return True
+        return False
+
+@dataclass
+class Userdata:
+    tutor_state: TutorState
+    agent_session: Optional[AgentSession] = None 
+
+
+@function_tool
+async def select_topic(
+    ctx: RunContext[Userdata], 
+    topic_id: Annotated[str, Field(description="The ID of the topic to study")]
+) -> str:
+    """Selects a topic to study from the available list."""
+    state = ctx.userdata.tutor_state
+    success = state.set_topic(topic_id.lower())
+    
+    if success:
+        return f"Topic set to {state.current_topic_data['title']}. Ask the user if they want to 'Learn', be 'Quizzed', or 'Teach it back'."
+    else:
+        available = ", ".join([t["id"] for t in COURSE_CONTENT])
+        return f"Topic not found. Available topics are: {available}"
+
+@function_tool
+async def set_learning_mode(
+    ctx: RunContext[Userdata], 
+    mode: Annotated[str, Field(description="The mode to switch to: 'learn', 'quiz', or 'teach_back'")]
+) -> str:
+    """Switches the interaction mode and updates the agent's voice/persona."""
+    
+    # 1. Update State
+    state = ctx.userdata.tutor_state
+    state.mode = mode.lower()
+    
+    # 2. Switch Voice based on Mode
+    agent_session = ctx.userdata.agent_session 
+    
+    if agent_session:
+        if state.mode == "learn":
+            # MATTHEW: Learn Mode
+            agent_session.tts.update_options(voice="en-US-matthew", style="Promo")
+            instruction = f"Mode: LEARN. Explain: {state.current_topic_data['summary']}"
+            
+        elif state.mode == "quiz":
+            # ALICIA: Quiz Mode
+            agent_session.tts.update_options(voice="en-US-alicia", style="Conversational")
+            instruction = f"Mode: QUIZ. Ask this question: {state.current_topic_data['sample_question']}"
+            
+        elif state.mode == "teach_back":
+            # KEN: Teach Back Mode
+            agent_session.tts.update_options(voice="en-US-ken", style="Promo")
+            instruction = "Mode: TEACH_BACK. Ask the user to explain the concept to you as if YOU are the beginner."
+        else:
+            return "Invalid mode."
+    else:
+        instruction = "Voice switch failed (Session not found)."
+
+    logger.info(f"SWITCHING MODE -> {state.mode.upper()}")
+    return f"Switched to {state.mode} mode. {instruction}"
+
+@function_tool
+async def evaluate_teaching(
+    ctx: RunContext[Userdata],
+    user_explanation: Annotated[str, Field(description="The explanation given by the user during teach-back")]
+) -> str:
+    """call this when the user has finished explaining a concept in 'teach_back' mode."""
+    logger.info(f"EVALUATING EXPLANATION: {user_explanation}")
+    return "Analyze the user's explanation. Give them a score out of 10 on accuracy and clarity, and correct any mistakes."
+
+# ======================================================
+# 🧠 AGENT DEFINITION
+# ======================================================
+
+class TutorAgent(Agent):
     def __init__(self):
+        # Generate list of topics for the prompt
+        topic_list = ", ".join([f"{t['id']} ({t['title']})" for t in COURSE_CONTENT])
+        
         super().__init__(
-            instructions=(
-                "You are **CodeCafe Barista AI**, a friendly barista. "
-                "You must collect coffee order details step-by-step. "
-                "Ask only **one question at a time**. "
-                "Never guess — always confirm if unclear.\n\n"
-                "Collect in this order:\n"
-                "1. Drink (latte / cappuccino / espresso / americano / mocha)\n"
-                "2. Size (small / medium / large)\n"
-                "3. Milk (regular / oat / almond / soy)\n"
-                "4. Extras (whipped cream / syrups / none)\n"
-                "5. Customer name\n\n"
-                "Be warm, short, friendly. "
-                "Always greet first: "
-                "'Welcome to Code Cafe! What would you like to order today?'"
-            )
+            instructions=f"""
+            You are an Tutor designed to help users master fundamental programming concepts.
+            
+            📚 **AVAILABLE TOPICS:** {topic_list}
+            
+            🔄 **YOU HAVE 3 MODES:**
+            1. **LEARN Mode (Voice: Matthew):** You explain the concept clearly using the summary data.
+            2. **QUIZ Mode (Voice: Alicia):** You ask the user a specific question to test knowledge.
+            3. **TEACH_BACK Mode (Voice: Ken):** YOU pretend to be a student. Ask the user to explain the concept to you.
+            
+            ⚙️ **BEHAVIOR:**
+            - Start by asking what topic they want to study.
+            - Use the `set_learning_mode` tool immediately when the user asks to learn, take a quiz, or teach.
+            - In 'teach_back' mode, listen to their explanation and then use `evaluate_teaching` to give feedback.
+            """,
+            tools=[select_topic, set_learning_mode, evaluate_teaching],
         )
 
 
 def prewarm(proc: JobProcess):
     proc.userdata["vad"] = silero.VAD.load()
 
-
-# ---------------------------------------------------------
-#   MAIN ENTRYPOINT
-# ---------------------------------------------------------
 async def entrypoint(ctx: JobContext):
     ctx.log_context_fields = {"room": ctx.room.name}
 
-    # Session (STT, LLM, TTS, VAD)
+
+    # 1. Initialize State
+    userdata = Userdata(tutor_state=TutorState())
+
+    # 2. Setup Agent
     session = AgentSession(
         stt=deepgram.STT(model="nova-3"),
         llm=google.LLM(model="gemini-2.5-flash"),
         tts=murf.TTS(
-            voice="hi-IN-Aman",
-            style="Conversation",
-            tokenizer=tokenize.basic.SentenceTokenizer(min_sentence_len=2),
+            voice="en-US-matthew", 
+            style="Promo",        
             text_pacing=True,
         ),
-        vad=ctx.proc.userdata["vad"],
         turn_detection=MultilingualModel(),
-        preemptive_generation=True,
+        vad=ctx.proc.userdata["vad"],
+        userdata=userdata,
     )
-
-    # Metrics
-    usage_collector = metrics.UsageCollector()
-
-    @session.on("metrics_collected")
-    def _on_metrics(ev: MetricsCollectedEvent):
-        metrics.log_metrics(ev.metrics)
-        usage_collector.collect(ev.metrics)
-
-    async def log_usage():
-        logger.info(f"Usage Summary: {usage_collector.get_summary()}")
-
-    ctx.add_shutdown_callback(log_usage)
-
-    # Start session
+    
+    # 3. Store session in userdata for tools to access
+    userdata.agent_session = session
+    
+    # 4. Start
     await session.start(
-        agent=BaristaAgent(),
+        agent=TutorAgent(),
         room=ctx.room,
         room_input_options=RoomInputOptions(
             noise_cancellation=noise_cancellation.BVC()
@@ -165,155 +274,5 @@ async def entrypoint(ctx: JobContext):
 
     await ctx.connect()
 
-    # GREETING
-    await session.say("Welcome to Code Cafe! What would you like to order today?")
-
-    # ORDER STRUCTURE
-    order = {
-        "drink": "",
-        "size": "",
-        "milk": "",
-        "extras": [],
-        "name": "",
-    }
-    
-    logger.info("Starting order collection process...")
-
-    # Listen system
-    last_text = {"text": ""}
-    transcript_event = asyncio.Event()
-
-    @session.on("transcript")
-    async def _on_transcript(ev):
-        t = getattr(ev, "transcript", None) or getattr(ev, "text", None)
-        if t:
-            last_text["text"] = t
-            transcript_event.set()
-
-    async def wait_text():
-        transcript_event.clear()
-        try:
-            await asyncio.wait_for(transcript_event.wait(), timeout=15)
-            return last_text["text"].strip()
-        except asyncio.TimeoutError:
-            return None
-
-    async def ask(question, list_mode=False):
-        await session.say(question)
-        reply = await wait_text()
-
-        if not reply:
-            await session.say("Sorry, I didn’t catch that. Could you repeat?")
-            reply = await wait_text()
-
-        if not reply:
-            return None
-
-        reply = reply.lower()
-
-        if list_mode:
-            if reply in ["none", "no"]:
-                return []
-            return [x.strip() for x in reply.replace(" and ", ",").split(",")]
-
-        return reply
-
-    # Questions
-    q_list = [
-        ("drink", "What drink would you like? Latte, cappuccino, espresso, americano or mocha?"),
-        ("size", "What size do you prefer? Small, medium or large?"),
-        ("milk", "What kind of milk would you like? Regular, oat, almond or soy?"),
-        ("extras", "Any extras? Whipped cream, syrups? Say 'none' if no extras.", True),
-        ("name", "Finally, may I know your name?"),
-    ]
-
-    for field, prompt, *extra in q_list:
-        list_mode = extra[0] if extra else False
-        logger.info(f"Asking for {field}: {prompt}")
-        
-        ans = await ask(prompt, list_mode)
-        logger.info(f"Received answer for {field}: {ans}")
-
-        if ans is None:
-            logger.error(f"No answer received for {field}, ending conversation")
-            await session.say("Sorry, I'm having trouble understanding. Let's continue later. Goodbye!")
-            await session.close()
-            return
-
-        order[field] = ans
-        logger.info(f"Set {field} = {ans}")
-
-    logger.info("Order collection completed successfully!")
-    logger.info(f"Final order data: {order}")
-    
-    # -------------------------------------------------
-    # SAVE ORDER TO JSON
-    # -------------------------------------------------
-    logger.info("Starting order saving process...")
-    # Calculate business logic data
-    order_number = generate_order_number()
-    total_price = calculate_total_price(order["drink"], order["size"], order["extras"])
-    estimated_time = calculate_preparation_time(order["drink"], order["size"], order["extras"])
-    
-    # Add comprehensive timestamp to order data
-    order_data = {
-        **order,
-        "order_number": order_number,
-        "timestamp": datetime.now(UTC).isoformat(),
-        "order_id": datetime.now(UTC).strftime('%Y%m%dT%H%M%S'),
-        "total_price": total_price,
-        "estimated_time": f"{estimated_time} minutes",
-        "currency": "USD",
-        "payment_status": "pending",
-        "order_status": "confirmed"
-    }
-    
-    # Get the current script directory and create orders path
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    orders_dir = os.path.join(script_dir, "..", "orders")
-    
-    # Debug logging
-    logger.info(f"Script directory: {script_dir}")
-    logger.info(f"Orders directory: {orders_dir}")
-    logger.info(f"Current working directory: {os.getcwd()}")
-    logger.info(f"Order data to save: {order_data}")
-    
-    try:
-        os.makedirs(orders_dir, exist_ok=True)
-        filename = os.path.join(orders_dir, f"order_{order_data['order_id']}.json")
-        
-        with open(filename, "w", encoding="utf-8") as f:
-            json.dump(order_data, f, indent=2)
-        
-        logger.info(f"Order successfully saved to: {filename}")
-        
-    except Exception as e:
-        logger.error(f"Failed to save order: {e}")
-        # Continue with the session even if saving fails
-
-    # Final message with business logic
-    extras_text = ", ".join(order["extras"]) if order["extras"] else "no extras"
-
-    await session.say(
-        f"Perfect! Order #{order_data['order_number']} confirmed for {order['name']}. "
-        f"You ordered a {order['size']} {order['drink']} with {order['milk']} milk and {extras_text}. "
-        f"Total: ${order_data['total_price']}. "
-        f"Estimated preparation time: {order_data['estimated_time']}. "
-        f"Your order has been saved and will be prepared shortly. Have a great day!"
-    )
-
-    # END CALL AFTER CONFIRMATION
-    await ctx.room.disconnect()
-    await session.close()
-
-
-# ---------------------------------------------------------
-# WORKER INIT
-# ---------------------------------------------------------
 if __name__ == "__main__":
-    cli.run_app(
-        WorkerOptions(
-            entrypoint_fnc=entrypoint,
-            prewarm_fnc=prewarm,
-        )
-    )
+    cli.run_app(WorkerOptions(entrypoint_fnc=entrypoint, prewarm_fnc=prewarm))

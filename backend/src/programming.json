@@ -1,0 +1,68 @@
+[
+    {
+        "id": "constants",
+        "title": "Constants",
+        "summary": "Constants store values that cannot be changed once assigned. They help prevent accidental modification of important data.",
+        "sample_question": "What is a constant and how is it different from a variable?"
+    },
+    {
+        "id": "operators",
+        "title": "Operators",
+        "summary": "Operators are symbols that perform operations on values, such as arithmetic (+, -), comparison (==, >), or logical (&&, ||).",
+        "sample_question": "What are operators and why are they used in programming?"
+    },
+    {
+        "id": "comments",
+        "title": "Comments",
+        "summary": "Comments are notes in code that explain what it does. They are ignored by the computer but help developers understand the logic.",
+        "sample_question": "Why are comments important in programming?"
+    },
+    {
+        "id": "boolean_logic",
+        "title": "Boolean Logic",
+        "summary": "Boolean logic deals with true or false values. It is essential for decision-making in programs using AND, OR, and NOT.",
+        "sample_question": "What is boolean logic and where is it used in programming?"
+    },
+    {
+        "id": "input_output",
+        "title": "Input & Output",
+        "summary": "Input is information the program receives from the user or system. Output is what the program returns or displays.",
+        "sample_question": "What is the difference between program input and program output?"
+    },
+    {
+        "id": "string_basics",
+        "title": "Strings",
+        "summary": "Strings are sequences of characters used to store text. They support operations like concatenation and formatting.",
+        "sample_question": "What is a string and how is it commonly used?"
+    },
+    {
+    "id": "indentation",
+    "title": "Indentation",
+    "summary": "Indentation organizes code structure and improves readability. In some languages like Python, it is required for blocks.",
+    "sample_question": "Why is indentation important in programming?"
+    },
+    {
+        "id": "type_casting",
+        "title": "Type Casting",
+        "summary": "Type casting converts data from one type to another, such as from a string to a number. It helps ensure proper calculations and operations.",
+        "sample_question": "What is type casting and when would you use it?"
+    },
+    {
+        "id": "assignment",
+        "title": "Assignment",
+        "summary": "Assignment means storing a value inside a variable using the assignment operator (=). It updates or sets the variable's content.",
+        "sample_question": "What does assignment mean in programming?"
+    },
+    {
+        "id": "basic_syntax",
+        "title": "Basic Syntax",
+        "summary": "Syntax refers to the rules of writing valid code in a programming language, such as indentation, semicolons, and brackets.",
+        "sample_question": "What is syntax in programming and why is it important?"
+    },
+    {
+        "id": "debugging",
+        "title": "Debugging",
+        "summary": "Debugging is the process of finding and fixing errors in code. It often involves testing, printing values, and using debugging tools.",
+        "sample_question": "What is debugging and why is it necessary?"
+    }
+]
