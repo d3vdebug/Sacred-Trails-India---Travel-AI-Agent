@@ -34,8 +34,9 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
     <div 
       ref={mergedRef} 
       className={cn(
-        'overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent hover:scrollbar-thumb-border/70',
-        'scroll-smooth',
+        'overflow-y-auto scroll-smooth',
+        // Hide scrollbar completely while maintaining scroll functionality
+        '[-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden',
         className
       )}
     >

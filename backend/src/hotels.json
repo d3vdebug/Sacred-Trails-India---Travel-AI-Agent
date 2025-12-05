@@ -1,0 +1,548 @@
+{
+  "Mumbai": [
+    {
+      "name": "Taj Mahal Palace",
+      "rating": 5,
+      "price_per_night": 25000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Gym"],
+      "availability": true,
+      "description": "Luxury hotel overlooking the Arabian Sea with colonial architecture and world-class service."
+    },
+    {
+      "name": "The Oberoi Mumbai",
+      "rating": 5,
+      "price_per_night": 20000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa"],
+      "availability": true,
+      "description": "Elegant hotel in the heart of the city with modern amenities and traditional hospitality."
+    },
+    {
+      "name": "ITC Grand Central",
+      "rating": 4,
+      "price_per_night": 12000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Gym"],
+      "availability": true,
+      "description": "Business hotel with comfortable rooms and excellent dining options."
+    },
+    {
+      "name": "Trident Nariman Point",
+      "rating": 4,
+      "price_per_night": 10000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast"],
+      "availability": true,
+      "description": "Sea-facing hotel with panoramic views and convenient location."
+    },
+    {
+      "name": "Hotel Marine Plaza",
+      "rating": 3,
+      "price_per_night": 5000,
+      "amenities": ["Wi-Fi", "Breakfast"],
+      "availability": true,
+      "description": "Budget-friendly hotel near the airport with basic amenities."
+    }
+  ],
+  "Delhi": [
+    {
+      "name": "The Imperial New Delhi",
+      "rating": 5,
+      "price_per_night": 22000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Gym"],
+      "availability": true,
+      "description": "Historic palace hotel with Mughal gardens and luxurious accommodations."
+    },
+    {
+      "name": "ITC Maurya",
+      "rating": 5,
+      "price_per_night": 18000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa"],
+      "availability": true,
+      "description": "Modern luxury hotel with extensive facilities and fine dining."
+    },
+    {
+      "name": "The Leela Palace New Delhi",
+      "rating": 5,
+      "price_per_night": 25000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Gym"],
+      "availability": true,
+      "description": "Palatial hotel with opulent rooms and world-renowned service."
+    },
+    {
+      "name": "Radisson Blu Plaza Delhi Airport",
+      "rating": 4,
+      "price_per_night": 8000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Gym"],
+      "availability": true,
+      "description": "Airport hotel with comfortable rooms and shuttle service."
+    },
+    {
+      "name": "Hotel City Park",
+      "rating": 3,
+      "price_per_night": 4000,
+      "amenities": ["Wi-Fi", "Breakfast"],
+      "availability": true,
+      "description": "Affordable hotel in the city center with clean rooms."
+    }
+  ],
+  "Goa": [
+    {
+      "name": "The Taj Mahal Palace Goa",
+      "rating": 5,
+      "price_per_night": 30000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Beach Access"],
+      "availability": true,
+      "description": "Beachfront luxury resort with private villas and exceptional service."
+    },
+    {
+      "name": "Park Hyatt Goa Resort and Spa",
+      "rating": 5,
+      "price_per_night": 28000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Beach Access"],
+      "availability": true,
+      "description": "Exclusive resort with lush gardens and personalized service."
+    },
+    {
+      "name": "The Leela Goa",
+      "rating": 5,
+      "price_per_night": 25000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Beach Access"],
+      "availability": true,
+      "description": "Beach resort with contemporary design and wellness facilities."
+    },
+    {
+      "name": "Radisson Blu Resort Goa Cavelossim",
+      "rating": 4,
+      "price_per_night": 12000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Beach Access"],
+      "availability": true,
+      "description": "Family-friendly resort with water sports and entertainment."
+    },
+    {
+      "name": "Hotel La Paz Gardens",
+      "rating": 3,
+      "price_per_night": 6000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast"],
+      "availability": true,
+      "description": "Budget resort with garden views and basic amenities."
+    }
+  ],
+  "Jaipur": [
+    {
+      "name": "Rambagh Palace",
+      "rating": 5,
+      "price_per_night": 35000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Gym"],
+      "availability": true,
+      "description": "Former royal residence turned luxury hotel with opulent heritage."
+    },
+    {
+      "name": "The Oberoi Rajvilas",
+      "rating": 5,
+      "price_per_night": 40000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Private Villas"],
+      "availability": true,
+      "description": "Palatial tents and villas inspired by Rajasthani architecture."
+    },
+    {
+      "name": "ITC Rajputana",
+      "rating": 5,
+      "price_per_night": 15000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa"],
+      "availability": true,
+      "description": "Heritage hotel with modern comforts and royal ambiance."
+    },
+    {
+      "name": "Clarks Amer",
+      "rating": 4,
+      "price_per_night": 10000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Gym"],
+      "availability": true,
+      "description": "Malabar hill palace converted into a luxury hotel."
+    },
+    {
+      "name": "Hotel Pearl Palace",
+      "rating": 3,
+      "price_per_night": 3000,
+      "amenities": ["Wi-Fi", "Breakfast"],
+      "availability": true,
+      "description": "Budget hotel near the city palace with clean accommodations."
+    }
+  ],
+  "Bangalore": [
+    {
+      "name": "The Leela Palace Bengaluru",
+      "rating": 5,
+      "price_per_night": 22000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Gym"],
+      "availability": true,
+      "description": "Opulent palace-style hotel with lush gardens and world-class dining."
+    },
+    {
+      "name": "ITC Gardenia",
+      "rating": 5,
+      "price_per_night": 18000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa"],
+      "availability": true,
+      "description": "Eco-friendly luxury hotel with stunning architecture and green initiatives."
+    },
+    {
+      "name": "Taj West End",
+      "rating": 5,
+      "price_per_night": 20000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Gym"],
+      "availability": true,
+      "description": "Heritage hotel set in 20 acres of tropical gardens."
+    },
+    {
+      "name": "The Oberoi Bengaluru",
+      "rating": 4,
+      "price_per_night": 12000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Gym"],
+      "availability": true,
+      "description": "Modern hotel with excellent business facilities."
+    },
+    {
+      "name": "Treebo Trend Habitat",
+      "rating": 3,
+      "price_per_night": 3500,
+      "amenities": ["Wi-Fi", "Breakfast"],
+      "availability": true,
+      "description": "Budget-friendly hotel with comfortable rooms and good service."
+    }
+  ],
+  "Kerala": [
+    {
+      "name": "Kumarakom Lake Resort",
+      "rating": 5,
+      "price_per_night": 28000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Houseboat"],
+      "availability": true,
+      "description": "Luxury resort on the banks of Vembanad Lake with traditional Kerala architecture."
+    },
+    {
+      "name": "Taj Bekal Resort & Spa",
+      "rating": 5,
+      "price_per_night": 25000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Beach Access"],
+      "availability": true,
+      "description": "Beachfront resort with Ayurvedic spa and stunning backwater views."
+    },
+    {
+      "name": "The Leela Kovalam",
+      "rating": 5,
+      "price_per_night": 22000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Beach Access"],
+      "availability": true,
+      "description": "Cliff-top resort overlooking the Arabian Sea."
+    },
+    {
+      "name": "Vivanta Kovalam",
+      "rating": 4,
+      "price_per_night": 10000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Beach Access"],
+      "availability": true,
+      "description": "Contemporary resort with panoramic ocean views."
+    },
+    {
+      "name": "Zostel Alleppey",
+      "rating": 3,
+      "price_per_night": 2500,
+      "amenities": ["Wi-Fi", "Breakfast"],
+      "availability": true,
+      "description": "Budget hostel perfect for backpackers exploring the backwaters."
+    }
+  ],
+  "Kolkata": [
+    {
+      "name": "The Oberoi Grand",
+      "rating": 5,
+      "price_per_night": 18000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Gym"],
+      "availability": true,
+      "description": "Colonial-era grand hotel in the heart of Kolkata."
+    },
+    {
+      "name": "ITC Royal Bengal",
+      "rating": 5,
+      "price_per_night": 15000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa"],
+      "availability": true,
+      "description": "Modern luxury hotel with excellent culinary experiences."
+    },
+    {
+      "name": "Taj Bengal",
+      "rating": 5,
+      "price_per_night": 16000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Gym"],
+      "availability": true,
+      "description": "Iconic hotel blending modern comfort with Bengali heritage."
+    },
+    {
+      "name": "The Park Kolkata",
+      "rating": 4,
+      "price_per_night": 8000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast"],
+      "availability": true,
+      "description": "Boutique hotel with contemporary design and vibrant nightlife."
+    },
+    {
+      "name": "Hotel & Motel Sitara",
+      "rating": 3,
+      "price_per_night": 3000,
+      "amenities": ["Wi-Fi", "Breakfast"],
+      "availability": true,
+      "description": "Affordable hotel near major attractions."
+    }
+  ],
+  "Hyderabad": [
+    {
+      "name": "Taj Falaknuma Palace",
+      "rating": 5,
+      "price_per_night": 45000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Gym"],
+      "availability": true,
+      "description": "19th-century palace hotel with breathtaking Nizam heritage."
+    },
+    {
+      "name": "ITC Kohenur",
+      "rating": 5,
+      "price_per_night": 20000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa"],
+      "availability": true,
+      "description": "Diamond-shaped architectural marvel with luxury amenities."
+    },
+    {
+      "name": "Taj Krishna Hyderabad",
+      "rating": 5,
+      "price_per_night": 16000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Gym"],
+      "availability": true,
+      "description": "Elegant hotel in the upscale Banjara Hills area."
+    },
+    {
+      "name": "Novotel Hyderabad",
+      "rating": 4,
+      "price_per_night": 7000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Gym"],
+      "availability": true,
+      "description": "Modern hotel ideal for business and leisure travelers."
+    },
+    {
+      "name": "Treebo Trend Bliss",
+      "rating": 3,
+      "price_per_night": 2800,
+      "amenities": ["Wi-Fi", "Breakfast"],
+      "availability": true,
+      "description": "Budget hotel with clean rooms and friendly service."
+    }
+  ],
+  "Udaipur": [
+    {
+      "name": "Taj Lake Palace",
+      "rating": 5,
+      "price_per_night": 50000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Lake Views"],
+      "availability": true,
+      "description": "Iconic floating palace on Lake Pichola."
+    },
+    {
+      "name": "The Oberoi Udaivilas",
+      "rating": 5,
+      "price_per_night": 55000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Private Pool"],
+      "availability": true,
+      "description": "Grand resort with semi-private pools and palace views."
+    },
+    {
+      "name": "The Leela Palace Udaipur",
+      "rating": 5,
+      "price_per_night": 40000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa"],
+      "availability": true,
+      "description": "Lakeside palace resort with royal Rajasthani hospitality."
+    },
+    {
+      "name": "Fateh Garh",
+      "rating": 4,
+      "price_per_night": 12000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Gym"],
+      "availability": true,
+      "description": "Heritage hotel with panoramic views of the city."
+    },
+    {
+      "name": "Hotel Lakend",
+      "rating": 3,
+      "price_per_night": 4500,
+      "amenities": ["Wi-Fi", "Breakfast"],
+      "availability": true,
+      "description": "Budget-friendly lakeside hotel with scenic views."
+    }
+  ],
+  "Agra": [
+    {
+      "name": "The Oberoi Amarvilas",
+      "rating": 5,
+      "price_per_night": 45000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Taj Mahal View"],
+      "availability": true,
+      "description": "Luxury hotel with unobstructed views of the Taj Mahal."
+    },
+    {
+      "name": "ITC Mughal",
+      "rating": 5,
+      "price_per_night": 18000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Gym"],
+      "availability": true,
+      "description": "Mughal-inspired luxury resort with award-winning spa."
+    },
+    {
+      "name": "Taj Hotel & Convention Centre",
+      "rating": 4,
+      "price_per_night": 10000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Gym"],
+      "availability": true,
+      "description": "Modern hotel with excellent conference facilities."
+    },
+    {
+      "name": "Crystal Sarovar Premiere",
+      "rating": 4,
+      "price_per_night": 6000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast"],
+      "availability": true,
+      "description": "Comfortable hotel near the Taj Mahal."
+    },
+    {
+      "name": "Hotel Sidhartha",
+      "rating": 3,
+      "price_per_night": 2500,
+      "amenities": ["Wi-Fi", "Breakfast"],
+      "availability": true,
+      "description": "Budget hotel with clean rooms and friendly staff."
+    }
+  ],
+  "Chennai": [
+    {
+      "name": "ITC Grand Chola",
+      "rating": 5,
+      "price_per_night": 22000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Gym"],
+      "availability": true,
+      "description": "Palatial hotel inspired by the Chola dynasty architecture."
+    },
+    {
+      "name": "The Leela Palace Chennai",
+      "rating": 5,
+      "price_per_night": 20000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa"],
+      "availability": true,
+      "description": "Art-deco styled luxury hotel with bay views."
+    },
+    {
+      "name": "Taj Coromandel",
+      "rating": 5,
+      "price_per_night": 16000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Gym"],
+      "availability": true,
+      "description": "Iconic hotel in the heart of Chennai."
+    },
+    {
+      "name": "Novotel Chennai Chamiers Road",
+      "rating": 4,
+      "price_per_night": 7500,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Gym"],
+      "availability": true,
+      "description": "Modern hotel in a prime location."
+    },
+    {
+      "name": "Hotel Sangam",
+      "rating": 3,
+      "price_per_night": 3000,
+      "amenities": ["Wi-Fi", "Breakfast"],
+      "availability": true,
+      "description": "Affordable hotel near tourist attractions."
+    }
+  ],
+  "Shimla": [
+    {
+      "name": "The Oberoi Cecil",
+      "rating": 5,
+      "price_per_night": 25000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Mountain View"],
+      "availability": true,
+      "description": "Colonial-era luxury hotel with stunning Himalayan views."
+    },
+    {
+      "name": "Wildflower Hall",
+      "rating": 5,
+      "price_per_night": 30000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Mountain View"],
+      "availability": true,
+      "description": "Former residence of Lord Kitchener, now a luxurious retreat."
+    },
+    {
+      "name": "The Chalets Naldehra",
+      "rating": 4,
+      "price_per_night": 12000,
+      "amenities": ["Wi-Fi", "Breakfast", "Spa", "Golf"],
+      "availability": true,
+      "description": "Swiss-style chalets near India's oldest golf course."
+    },
+    {
+      "name": "Hotel Combermere",
+      "rating": 4,
+      "price_per_night": 6000,
+      "amenities": ["Wi-Fi", "Breakfast", "Mountain View"],
+      "availability": true,
+      "description": "Heritage hotel on the Mall Road."
+    },
+    {
+      "name": "Hotel Willow Banks",
+      "rating": 3,
+      "price_per_night": 3500,
+      "amenities": ["Wi-Fi", "Breakfast"],
+      "availability": true,
+      "description": "Budget-friendly hotel with comfortable rooms."
+    }
+  ],
+  "Manali": [
+    {
+      "name": "The Himalayan",
+      "rating": 5,
+      "price_per_night": 20000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa", "Mountain View"],
+      "availability": true,
+      "description": "Luxury resort with panoramic views of the Himalayas."
+    },
+    {
+      "name": "Span Resort & Spa",
+      "rating": 5,
+      "price_per_night": 18000,
+      "amenities": ["Wi-Fi", "Pool", "Breakfast", "Spa"],
+      "availability": true,
+      "description": "Riverside resort with excellent wellness facilities."
+    },
+    {
+      "name": "Solang Valley Resort",
+      "rating": 4,
+      "price_per_night": 10000,
+      "amenities": ["Wi-Fi", "Breakfast", "Mountain View", "Adventure Sports"],
+      "availability": true,
+      "description": "Adventure resort near popular skiing slopes."
+    },
+    {
+      "name": "Johnson Lodge & Spa",
+      "rating": 4,
+      "price_per_night": 8000,
+      "amenities": ["Wi-Fi", "Breakfast", "Spa"],
+      "availability": true,
+      "description": "Colonial-style lodge with cozy ambiance."
+    },
+    {
+      "name": "Zostel Manali",
+      "rating": 3,
+      "price_per_night": 1500,
+      "amenities": ["Wi-Fi", "Breakfast"],
+      "availability": true,
+      "description": "Popular backpacker hostel with great community vibes."
+    }
+  ]
+}

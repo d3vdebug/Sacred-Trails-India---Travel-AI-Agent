@@ -26,10 +26,10 @@
   --border: oklch(0.88 0.02 280);
   --input: oklch(0.92 0.03 280);
   --ring: oklch(0.6 0.05 280);
-  /* Pastel chat theme colors */
-  --chat-bubble-user: oklch(0.75 0.06 280);
+  /* Pastel chat theme colors - blue/cyan theme */
+  --chat-bubble-user: oklch(0.75 0.06 200);
   --chat-bubble-user-text: oklch(0.98 0.01 280);
-  --chat-bubble-assistant: oklch(0.92 0.04 300);
+  --chat-bubble-assistant: oklch(0.92 0.04 180);
   --chat-bubble-assistant-text: oklch(0.25 0.02 280);
   --chat-bubble-assistant-border: oklch(0.8 0.03 280 / 0.3);
   --chat-input-bg: oklch(0.95 0.02 280);
@@ -81,10 +81,10 @@
   --border: oklch(0.3 0.02 280 / 0.3);
   --input: oklch(0.25 0.03 280);
   --ring: oklch(0.5 0.05 280);
-  /* Pastel chat theme colors for dark mode */
-  --chat-bubble-user: oklch(0.55 0.06 280);
+  /* Pastel chat theme colors for dark mode - blue/cyan theme */
+  --chat-bubble-user: oklch(0.55 0.06 200);
   --chat-bubble-user-text: oklch(0.98 0.01 280);
-  --chat-bubble-assistant: oklch(0.25 0.05 300);
+  --chat-bubble-assistant: oklch(0.25 0.05 180);
   --chat-bubble-assistant-text: oklch(0.85 0.01 280);
   --chat-bubble-assistant-border: oklch(0.4 0.03 280 / 0.3);
   --chat-input-bg: oklch(0.2 0.03 280);

@@ -61,6 +61,11 @@ export function ChatTranscript({
 }: ChatTranscriptProps) {
   if (hidden) return null;
 
+  // Helper function to clean booking data tags from messages
+  const cleanMessage = (msg: string) => {
+    return msg.replace(/\[BOOKING_DATA\][\s\S]*?\[\/BOOKING_DATA\]/g, '').trim();
+  };
+
   return (
     <div className={className}>
       <AnimatePresence>
@@ -68,6 +73,10 @@ export function ChatTranscript({
           const locale = navigator?.language ?? 'en-US';
           const messageOrigin = from?.isLocal ? 'local' : 'remote';
           const hasBeenEdited = !!editTimestamp;
+          const cleanedMessage = cleanMessage(message);
+
+          // Skip rendering if message is empty after cleaning
+          if (!cleanedMessage) return null;
 
           return (
             <motion.div
@@ -79,7 +88,7 @@ export function ChatTranscript({
               <ChatEntry
                 locale={locale}
                 timestamp={timestamp}
-                message={message}
+                message={cleanedMessage}
                 messageOrigin={messageOrigin}
                 hasBeenEdited={hasBeenEdited}
               />

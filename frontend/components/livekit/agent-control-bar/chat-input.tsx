@@ -70,7 +70,7 @@ export function ChatInput({
     >
       <form
         onSubmit={handleSubmit}
-        className="flex grow items-end gap-3 p-2 bg-chat-input-bg/30 rounded-xl border border-chat-input-border/50"
+        className="flex grow items-end gap-3 p-3 bg-white/90 backdrop-blur-md rounded-2xl border border-blue-200/50 shadow-lg hover:shadow-xl transition-all duration-300"
       >
         <div className="flex-1 relative">
           <input
@@ -79,9 +79,9 @@ export function ChatInput({
             type="text"
             value={message}
             disabled={!chatOpen}
-            placeholder="Type your message..."
+            placeholder="Ask about travel destinations, packages, or bookings..."
             onChange={(e) => setMessage(e.target.value)}
-            className="w-full h-10 px-4 pr-12 bg-background border border-chat-input-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 text-sm text-chat-input-text placeholder:text-chat-input-placeholder"
+            className="w-full h-12 px-5 pr-14 bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200/60 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-200/50 focus:border-blue-400 transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50 text-sm text-gray-800 placeholder:text-blue-400/70 font-medium"
           />
           <div className="absolute right-3 top-1/2 -translate-y-1/2">
             <div className="w-2 h-2 bg-connection-success/40 rounded-full animate-pulse"></div>
@@ -91,11 +91,11 @@ export function ChatInput({
           size="lg"
           type="submit"
           disabled={isDisabled}
-          variant={isDisabled ? 'secondary' : 'primary'}
+          variant={isDisabled ? 'secondary' : 'default'}
           title={isSending ? 'Sending...' : 'Send message'}
           className={cn(
-            "h-10 px-6 transition-all duration-200 hover:scale-105",
-            !isDisabled && "shadow-lg hover:shadow-xl"
+            "h-12 px-6 transition-all duration-300 hover:scale-105 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold shadow-lg hover:shadow-xl rounded-xl",
+            !isDisabled && "transform hover:-translate-y-0.5"
           )}
         >
           {isSending ? (

@@ -80,8 +80,8 @@ export const ChatEntry = ({
             'max-w-[85%] md:max-w-[75%] rounded-2xl px-4 py-3 shadow-sm transition-all duration-200',
             'hover:shadow-md hover:scale-[1.02]',
             messageOrigin === 'local' 
-              ? 'bg-gradient-to-br from-pink-300 to-purple-300 text-gray-800 ml-auto shadow-lg' 
-              : 'bg-chat-bubble-assistant border border-chat-bubble-assistant-border text-chat-bubble-assistant-text mr-auto'
+              ? 'bg-gradient-to-br from-blue-500 to-cyan-500 text-white ml-auto shadow-lg' 
+              : 'bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200 text-blue-900 mr-auto shadow-sm'
           )}
         >
           <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">

@@ -123,7 +123,7 @@ export function TileLayout({ chatOpen }: TileLayoutProps) {
                     delay: animationDelay,
                   }}
                   className={cn(
-                    'bg-background/95 backdrop-blur-sm aspect-square h-[90px] rounded-xl border border-transparent transition-all duration-300',
+                    'bg-transparent backdrop-blur-sm border-0 px-10 py-15 rounded-2xl',
                     'hover:border-primary/20 hover:shadow-lg hover:shadow-primary/10',
                     chatOpen && 'border-primary/30 shadow-lg shadow-primary/20 delay-200'
                   )}

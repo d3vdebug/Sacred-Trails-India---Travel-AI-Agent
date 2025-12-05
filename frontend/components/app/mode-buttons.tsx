@@ -15,7 +15,7 @@ export default function ModeButtons() {
     <div className="bg-background/95 backdrop-blur-md border border-border/50 rounded-2xl p-4 shadow-lg">
       <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
         <div style={{ display: "flex", gap: "8px" }}>
-          <Button 
+          <Button
             onClick={() => sendMode("learn")}
             variant="secondary"
             className="flex-1 font-medium"
@@ -23,7 +23,17 @@ export default function ModeButtons() {
           >
             📚 Learn
           </Button>
-          <Button 
+          <Button
+            onClick={() => sendMode("pronunciation")}
+            variant="secondary"
+            className="flex-1 font-medium"
+            size="sm"
+          >
+            🎤 Pronunciation
+          </Button>
+        </div>
+        <div style={{ display: "flex", gap: "8px" }}>
+          <Button
             onClick={() => sendMode("quiz")}
             variant="secondary"
             className="flex-1 font-medium"
@@ -31,7 +41,7 @@ export default function ModeButtons() {
           >
             ❓ Quiz
           </Button>
-          <Button 
+          <Button
             onClick={() => sendMode("teach_back")}
             variant="secondary"
             className="flex-1 font-medium"
