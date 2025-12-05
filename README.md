@@ -1,214 +1,248 @@
-# AI Voice Agents Challenge - Starter Repository
+Sacred Trails India - AI Travel Voice Agent
+Welcome to Sacred Trails India, an intelligent voice AI agent that revolutionizes travel planning and booking for destinations across India. Built with cutting-edge AI technology including Murf Falcon TTS for the TechFest IIT Bombay Murf AI Voice Agent Hackathon.
 
-Welcome to the **AI Voice Agents Challenge** by [murf.ai](https://murf.ai)!
+🎯 Project Overview
+Sacred Trails India is your personal AI travel concierge that enables users to plan and book complete trips through natural voice conversations. Simply speak about your travel preferences, and our AI handles everything from destination selection to booking confirmations.
 
-## About the Challenge
+Key Features
+🎤 Natural Voice Conversations: Speak normally about destinations, dates, and preferences
+🏨 Smart Hotel Recommendations: AI suggests hotels based on your budget and preferences
+🚗 Travel Mode Selection: Choose from bus, train, plane, or private car with real-time cost calculations
+📧 Automated Confirmations: Instant booking confirmations with detailed email receipts
+💾 Persistent Booking Management: View, modify, or cancel bookings using unique booking IDs
+🌍 India-Focused: Specialized for travel within India with local knowledge
+🚀 Technology Stack
+Backend
+Python with LiveKit Agents framework
+Murf Falcon TTS - Ultra-fast, high-quality text-to-speech
+Google Gemini LLM - Intelligent conversation processing
+Deepgram STT - Accurate speech-to-text conversion
+MongoDB - Robust booking and user data storage
+SMTP Integration - Automated email confirmations
+Frontend
+React with Next.js for modern web interface
+LiveKit for real-time voice interaction
+TypeScript for type safety
+Tailwind CSS for responsive design
+📁 Project Structure
+Sacred-Trails-India/
+├── backend/                 # LiveKit Agents backend with Murf Falcon TTS
+│   ├── src/
+│   │   ├── agent.py         # Main AI travel agent logic
+│   │   ├── mongodb_utils.py # Database utilities
+│   │   └── hotels.json      # Hotel database for destinations
+│   ├── start_mongodb.bat    # MongoDB startup (Windows)
+│   ├── start_mongodb.sh     # MongoDB startup (Unix/Linux)
+│   ├── docker-compose.yml   # MongoDB container setup
+│   └── requirements...
+├── frontend/                # React/Next.js voice interface
+│   ├── components/
+│   │   ├── app/            # Main application components
+│   │   └── livekit/        # LiveKit integration components
+│   ├── app/                # Next.js app directory
+│   └── public/             # Static assets and destination images
+├── start_app.sh            # Convenience script to start all services
+└── README.md               # This file
+🛠️ Quick Start Guide
+Prerequisites
+Ensure you have the following installed:
 
-We just launched **Murf Falcon** – the consistently fastest TTS API, and you're going to be among the first to test it out in ways never thought before!
-
-**Build 10 AI Voice Agents over the course of 10 Days** along with help from our devs and the community champs, and win rewards!
-
-### How It Works
-
-- One task to be provided everyday along with a GitHub repo for reference
-- Build a voice agent with specific personas and skills
-- Post on GitHub and share with the world on LinkedIn!
-
-## Repository Structure
-
-This is a **monorepo** that contains both the backend and frontend for building voice agent applications. It's designed to be your starting point for each day's challenge task.
-
-```
-falcon-tdova-nov25-livekit/
-├── backend/          # LiveKit Agents backend with Murf Falcon TTS
-├── frontend/         # React/Next.js frontend for voice interaction
-├── start_app.sh      # Convenience script to start all services
-└── README.md         # This file
-```
-
-### Backend
-
-The backend is based on [LiveKit's agent-starter-python](https://github.com/livekit-examples/agent-starter-python) with modifications to integrate **Murf Falcon TTS** for ultra-fast, high-quality voice synthesis.
-
-**Features:**
-
-- Complete voice AI agent framework using LiveKit Agents
-- Murf Falcon TTS integration for fastest text-to-speech
-- LiveKit Turn Detector for contextually-aware speaker detection
-- Background voice cancellation
-- Integrated metrics and logging
-- Complete test suite with evaluation framework
-- Production-ready Dockerfile
-
-[→ Backend Documentation](./backend/README.md)
-
-### Frontend
-
-The frontend is based on [LiveKit's agent-starter-react](https://github.com/livekit-examples/agent-starter-react), providing a modern, beautiful UI for interacting with your voice agents.
-
-**Features:**
-
-- Real-time voice interaction with LiveKit Agents
-- Camera video streaming support
-- Screen sharing capabilities
-- Audio visualization and level monitoring
-- Light/dark theme switching
-- Highly customizable branding and UI
-
-[→ Frontend Documentation](./frontend/README.md)
-
-## Quick Start
-
-### Prerequisites
-
-Make sure you have the following installed:
-
-- Python 3.9+ with [uv](https://docs.astral.sh/uv/) package manager
-- Node.js 18+ with pnpm
-- [LiveKit CLI](https://docs.livekit.io/home/cli/cli-setup) (optional but recommended)
-- [LiveKit Server](https://docs.livekit.io/home/self-hosting/local/) for local development
-
-### 1. Clone the Repository
-
-```bash
-git clone <your-repo-url>
-cd falcon-tdova-nov25-livekit
-```
-
-### 2. Backend Setup
-
-```bash
+Python 3.9+ with uv package manager
+Node.js 18+ with pnpm
+Docker (for MongoDB)
+Git
+1. Clone the Repository
+git clone <your-repository-url>
+cd Sacred-Trails-India
+2. Backend Setup
 cd backend
 
-# Install dependencies
+# Install Python dependencies
 uv sync
 
-# Copy environment file and configure
+# Copy environment file
 cp .env.example .env.local
 
-# Edit .env.local with your credentials:
+# Edit .env.local with your API keys:
 # - LIVEKIT_URL
-# - LIVEKIT_API_KEY
+# - LIVEKIT_API_KEY  
 # - LIVEKIT_API_SECRET
 # - MURF_API_KEY (for Falcon TTS)
 # - GOOGLE_API_KEY (for Gemini LLM)
 # - DEEPGRAM_API_KEY (for Deepgram STT)
+# - SMTP_EMAIL (for booking confirmations)
+# - SMTP_PASSWORD (for booking confirmations)
 
-# Download required models
+# Download required AI models
 uv run python src/agent.py download-files
-```
+3. Database Setup
+Start MongoDB (Windows):
 
-For LiveKit Cloud users, you can automatically populate credentials:
+# Double-click or run in Command Prompt
+start_mongodb.bat
+Start MongoDB (Unix/Linux):
 
-```bash
-lk cloud auth
-lk app env -w -d .env.local
-```
+chmod +x start_mongodb.sh
+./start_mongodb.sh
+This will start MongoDB and MongoDB Express (web interface at http://localhost:8081).
 
-### 3. Frontend Setup
-
-```bash
+4. Frontend Setup
 cd frontend
 
 # Install dependencies
 pnpm install
 
-# Copy environment file and configure
+# Copy environment file
 cp .env.example .env.local
 
 # Edit .env.local with the same LiveKit credentials
-```
-
-### 4. Run the Application
-
-#### Install livekit server
-
-```bash
-brew install livekit
-```
-
-You have two options:
-
-#### Option A: Use the convenience script (runs everything)
-
-```bash
-# From the root directory
+5. Run the Application
+Option A: One-Command Startup
+# From root directory
 chmod +x start_app.sh
 ./start_app.sh
-```
+Option B: Manual Startup
+Terminal 1 - Start all services:
 
-This will start:
+# Start MongoDB
+cd backend
+./start_mongodb.sh  # or start_mongodb.bat on Windows
 
-- LiveKit Server (in dev mode)
-- Backend agent (listening for connections)
-- Frontend app (at http://localhost:3000)
-
-#### Option B: Run services individually
-
-```bash
-# Terminal 1 - LiveKit Server
-livekit-server --dev
-
-# Terminal 2 - Backend Agent
+# Terminal 2 - Start AI Agent
 cd backend
 uv run python src/agent.py dev
 
-# Terminal 3 - Frontend
+# Terminal 3 - Start Frontend  
 cd frontend
 pnpm dev
-```
+6. Access the Application
+Open your browser and navigate to:
 
-Then open http://localhost:3000 in your browser!
+Frontend: http://localhost:3000
+MongoDB Express: http://localhost:8081 (admin/admin)
+🎮 How to Use Sacred Trails India
+Sample Conversation Flow
+Greeting: The AI agent introduces itself as "Nikhil" from Sacred Trails India
+Destination Selection: "I want to plan a trip to Goa"
+Travel Details: Provide dates, number of travelers, origin city
+Preferences: Specify budget range and desired amenities
+Travel Mode: Choose from available transport options with cost calculations
+Hotel Selection: Review and select from AI-recommended hotels
+Contact Details: Provide name, mobile number, and email
+Booking Confirmation: Receive booking ID and email confirmation
+Example Commands
+"I want to travel to Mumbai from Delhi"
+"My budget is medium, and I prefer hotels with Wi-Fi and breakfast"
+"Show me travel options to Goa"
+"What's my booking status for booking ID ABC12345?"
+"Cancel my booking ABC12345"
+🔧 Configuration
+Environment Variables
+Create a .env.local file in both backend and frontend directories:
 
-## Daily Challenge Tasks
+# LiveKit Configuration
+LIVEKIT_URL=your_livekit_url
+LIVEKIT_API_KEY=your_livekit_api_key
+LIVEKIT_API_SECRET=your_livekit_api_secret
 
-Each day, you'll receive a new task that builds upon your voice agent. The tasks will help you:
+# AI Services
+MURF_API_KEY=your_murf_api_key
+GOOGLE_API_KEY=your_google_api_key
+DEEPGRAM_API_KEY=your_deepgram_api_key
 
-- Implement different personas and conversation styles
-- Add custom tools and capabilities
-- Integrate with external APIs
-- Build domain-specific agents (customer service, tutoring, etc.)
-- Optimize performance and user experience
+# Email Configuration
+SMTP_EMAIL=your_email@gmail.com
+SMTP_PASSWORD=your_app_password
+Available Destinations
+The system currently supports bookings for:
 
-**Stay tuned for daily task announcements!**
-
-## Documentation & Resources
-
-- [Murf Falcon TTS Documentation](https://murf.ai/api/docs/text-to-speech/streaming)
-- [LiveKit Agents Documentation](https://docs.livekit.io/agents)
-- [Original Backend Template](https://github.com/livekit-examples/agent-starter-python)
-- [Original Frontend Template](https://github.com/livekit-examples/agent-starter-react)
-
-## Testing
-
-The backend includes a comprehensive test suite:
-
-```bash
+Mumbai, Delhi, Goa, Jaipur, Bangalore
+Kerala, Kolkata, Hyderabad, Chennai
+Shimla, Manali, Udaipur, Agra
+📊 Features & Capabilities
+🎯 Core Functionality
+Destination Management: 12+ major Indian destinations
+Hotel Database: Curated hotels with ratings, prices, and amenities
+Travel Calculations: Real-time cost and duration estimates
+Booking Persistence: MongoDB-powered data storage
+Email Integration: Automated confirmation emails
+🛡️ Technical Features
+Murf Falcon TTS: Ultra-fast voice synthesis (200ms response time)
+Context-Aware Conversations: Maintains conversation state throughout booking
+Error Handling: Graceful handling of invalid inputs and system errors
+Logging: Comprehensive logging for debugging and monitoring
+Docker Support: Containerized MongoDB for easy deployment
+🧪 Testing
+Backend Tests
 cd backend
 uv run pytest
-```
+Email Testing
+cd backend
+uv run python test_email.py
+MongoDB Connection Test
+cd backend
+uv run python test_mongodb.py
+🐛 Troubleshooting
+Common Issues
+MongoDB Connection Failed
 
-Learn more about testing voice agents in the [LiveKit testing documentation](https://docs.livekit.io/agents/build/testing/).
+# Check if Docker is running
+docker --version
 
-## Contributing & Community
+# Check MongoDB container status
+docker ps
 
-This is a challenge repository, but we encourage collaboration and knowledge sharing!
+# View MongoDB logs
+docker-compose logs mongodb
+TTS Not Working
 
-- Share your solutions and learnings on GitHub
-- Post about your progress on LinkedIn
-- Join the [LiveKit Community Slack](https://livekit.io/join-slack)
-- Connect with other challenge participants
+Verify MURF_API_KEY in .env.local
+Check Murf Falcon TTS service status
+Review agent logs for TTS errors
+Frontend Connection Issues
 
-## License
+Ensure LiveKit credentials match between backend and frontend
+Check browser console for WebRTC errors
+Verify LIVEKIT_URL is accessible
+🚀 Deployment
+Production Deployment
+Build Docker Images:
 
-This project is based on MIT-licensed templates from LiveKit and includes integration with Murf Falcon. See individual LICENSE files in backend and frontend directories for details.
+docker-compose -f docker-compose.prod.yml build
+Deploy to Cloud:
 
-## Have Fun!
+Upload to Docker Hub or cloud registry
+Configure environment variables on production server
+Set up reverse proxy (nginx) for frontend
+LiveKit Cloud Deployment
+For production, consider deploying to LiveKit Cloud:
 
-Remember, the goal is to learn, experiment, and build amazing voice AI agents. Don't hesitate to be creative and push the boundaries of what's possible with Murf Falcon and LiveKit!
+Managed LiveKit infrastructure
+Built-in scaling and monitoring
+Simplified credential management
+🤝 Contributing
+This project was created for the Murf AI Voice Agent Hackathon. To contribute:
 
-Good luck with the challenge!
+Fork the repository
+Create a feature branch
+Commit your changes
+Push to the branch
+Create a Pull Request
+📄 License
+This project is licensed under the MIT License. See individual LICENSE files in backend and frontend directories for details.
 
----
+🙏 Acknowledgments
+Murf.ai for providing Falcon TTS API for this hackathon
+LiveKit for the excellent Agents framework
+TechFest IIT Bombay for organizing the hackathon
+Google for Gemini LLM and Deepgram for STT services
+📞 Support
+For issues and support:
 
-Built for the AI Voice Agents Challenge by murf.ai
+Check the troubleshooting section above
+Review logs in backend/agent_debug.log
+Consult LiveKit and Murf documentation
+Open an issue in this repository
+Built with ❤️ for the TechFest IIT Bombay Murf AI Voice Agent Hackathon
+
+Experience the future of travel planning with Sacred Trails India - where AI meets wanderlust!
